@@ -39,7 +39,9 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "Ataoge.AspNetCore": "1.0.0-*"
+    "Ataoge.AspNetCore": {
+      "target":"project"
+    }
   },
 
   "tools": {

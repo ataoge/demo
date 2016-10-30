@@ -6,15 +6,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ataoge.AspNetCore.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace Ataoge.AspNetCore.Identity.InMemory
 {
     public class InMemoryUserStore :
         IUserLoginStore<IntIdentityUser>,
         IUserRoleStore<IntIdentityUser>,
-        IUserClaimStore<IntIdentityUser>,
+        //IUserClaimStore<IntIdentityUser>,
         IUserPasswordStore<IntIdentityUser>,
-        IUserSecurityStampStore<IntIdentityUser>,
+        //IUserSecurityStampStore<IntIdentityUser>,
         IUserEmailStore<IntIdentityUser>,
         IUserLockoutStore<IntIdentityUser>,
         IUserPhoneNumberStore<IntIdentityUser>,
@@ -22,6 +23,12 @@ namespace Ataoge.AspNetCore.Identity.InMemory
         IUserTwoFactorStore<IntIdentityUser>,
         IUserAuthenticationTokenStore<IntIdentityUser>
     {
+        public InMemoryUserStore()
+        {
+           
+        }
+
+        ILogger<InMemoryUserStore> logger;
 
         public IQueryable<IntIdentityUser> Users
         {
@@ -70,6 +77,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
 
         public Task<IntIdentityUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
         {
+            logger.LogInformation("FindByEmailAsync");
             var user = InMemoryStores.Users.FirstOrDefault(u => u.NormalizedEmail == normalizedEmail);
             return Task.FromResult(user);
         }
@@ -175,7 +183,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
 
         public Task<bool> GetTwoFactorEnabledAsync(IntIdentityUser user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(user.TwoFactorEnabled);
         }
 
         public Task<string> GetUserIdAsync(IntIdentityUser user, CancellationToken cancellationToken)

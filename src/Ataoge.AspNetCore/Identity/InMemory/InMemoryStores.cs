@@ -13,7 +13,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
                 };
             users = new List<IntIdentityUser>()
                 {
-                    new IntIdentityUser() { Id = 0, UserName = "admin", NormalizedUserName = "ADMIN", Email = "admin@ataoge.com", NormalizedEmail = "ADMIN@ATAOGE.COM", PasswordHash = "AQAAAAEAACcQAAAAELO1bRjVx4aSgfz5mIRbJnrgl829AhqBa2Nsav157IpWfOHh6Zs6fYIQv8/9ZobpfQ==" }
+                    new IntIdentityUser() { Id = 0, UserName = "admin@ataoge.com", NormalizedUserName = "ADMIN@ATAOGE.COM", Email = "admin@ataoge.com", NormalizedEmail = "ADMIN@ATAOGE.COM", PasswordHash = "AQAAAAEAACcQAAAAEAuV+gVSSJtg0TurRmRZJG5py5xrUIOlWy77ssEMRVXjscngyRujGF2svKbMH/4Qbg==" }
                 };
 
             userRoles = new  List<IntIdentityUserRole>()

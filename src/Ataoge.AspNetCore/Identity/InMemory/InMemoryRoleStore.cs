@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Identity;
 namespace Ataoge.AspNetCore.Identity.InMemory
 {
     public class InMemoryRoleStore :
-        IQueryableRoleStore<IntIdentityRole>,
-        IRoleClaimStore<IntIdentityRole>
+        IQueryableRoleStore<IntIdentityRole>//,
+        //IRoleClaimStore<IntIdentityRole>
     {
         public InMemoryRoleStore()
         {
