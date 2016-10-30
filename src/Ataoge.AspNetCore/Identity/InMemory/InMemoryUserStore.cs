@@ -77,7 +77,6 @@ namespace Ataoge.AspNetCore.Identity.InMemory
 
         public Task<IntIdentityUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
         {
-            logger.LogInformation("FindByEmailAsync");
             var user = InMemoryStores.Users.FirstOrDefault(u => u.NormalizedEmail == normalizedEmail);
             return Task.FromResult(user);
         }

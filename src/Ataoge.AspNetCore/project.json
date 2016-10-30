@@ -1,6 +1,9 @@
 ﻿{
   "version": "1.0.0-*",
 
+  "buildOptions": {
+    "debugType": "portable"
+  },
   "dependencies": {
     "Microsoft.AspNetCore.Identity": "1.0.0",
     "System.Linq.Queryable": "4.0.1",
