@@ -39,6 +39,7 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
+    "Microsoft.Extensions.Caching.Memory" : "1.0.0",
     "Ataoge.AspNetCore": {
       "target":"project"
     }

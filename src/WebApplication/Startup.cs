@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Ataoge.Core;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
 using WebApplication.Services;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Ataoge.AspNetCore;
 
 namespace WebApplication
 {
@@ -37,13 +42,21 @@ namespace WebApplication
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            //services.AddDbContext<ApplicationDbContext>(options =>
-                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //支持配置
+            services.AddOptions();
+            
+            //添加缓存
+            services.AddMemoryCache();
+            services.AddSingleton<IDistributedCache, MemoryDistributedCache>();
 
-            services.AddInMemoryIdentity()
-                .AddDefaultTokenProviders();
+            //添加框架的各种服务
+            services.AddAtaogeAspNetCore(o => {
+                o.UseDefaultCache();
+                o.UserModule(new AspNetCoreModule()); //注册模块，内部能自动添加服务
+            });
 
-            services.AddMvc();
+            services.AddMvc(option => option.Filters.Add(new AspNetCoreExceptionFilterAttribute()))  //添加例外处理
+                    .AddApplicationPart(typeof(AspNetCoreModule).GetTypeInfo().Assembly);  //添加外部Controller
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();

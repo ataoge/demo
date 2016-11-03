@@ -5,9 +5,15 @@
     "debugType": "portable"
   },
   "dependencies": {
+    "Ataoge.Core" : {
+      "target":"project"
+    },
     "Microsoft.AspNetCore.Identity": "1.0.0",
+    "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
     "System.Linq.Queryable": "4.0.1",
     "Microsoft.Extensions.DependencyInjection": "1.0.0",
+    "Microsoft.Extensions.Caching.Abstractions" : "1.0.0",
+    "Newtonsoft.Json":"9.0.1",
     "NETStandard.Library": "1.6.0"
   },
 

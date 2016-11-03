@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Identity;
 namespace Ataoge.AspNetCore.Identity.InMemory
 {
     public class InMemoryRoleStore :
-        IQueryableRoleStore<IntIdentityRole>//,
-        //IRoleClaimStore<IntIdentityRole>
+        IQueryableRoleStore<IntIdentityRole>
+        
     {
         public InMemoryRoleStore()
         {
@@ -26,10 +26,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
             }
         }
 
-        public Task AddClaimAsync(IntIdentityRole role, Claim claim, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
-        }
+     
 
         public Task<IdentityResult> CreateAsync(IntIdentityRole role, CancellationToken cancellationToken)
         {
@@ -44,7 +41,6 @@ namespace Ataoge.AspNetCore.Identity.InMemory
 
         public Task<IdentityResult> DeleteAsync(IntIdentityRole role, CancellationToken cancellationToken)
         {
-            //
             throw new NotImplementedException();
         }
 
@@ -66,10 +62,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
             return Task.FromResult(role);
         }
 
-        public Task<IList<Claim>> GetClaimsAsync(IntIdentityRole role, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
-        }
+    
 
         public Task<string> GetNormalizedRoleNameAsync(IntIdentityRole role, CancellationToken cancellationToken)
         {
@@ -87,10 +80,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
             return Task.FromResult(role.Name);
         }
 
-        public Task RemoveClaimAsync(IntIdentityRole role, Claim claim, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public Task SetNormalizedRoleNameAsync(IntIdentityRole role, string normalizedName, CancellationToken cancellationToken)
         {

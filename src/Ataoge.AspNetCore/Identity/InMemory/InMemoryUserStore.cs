@@ -13,9 +13,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
     public class InMemoryUserStore :
         IUserLoginStore<IntIdentityUser>,
         IUserRoleStore<IntIdentityUser>,
-        //IUserClaimStore<IntIdentityUser>,
         IUserPasswordStore<IntIdentityUser>,
-        //IUserSecurityStampStore<IntIdentityUser>,
         IUserEmailStore<IntIdentityUser>,
         IUserLockoutStore<IntIdentityUser>,
         IUserPhoneNumberStore<IntIdentityUser>,
@@ -28,7 +26,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
            
         }
 
-        ILogger<InMemoryUserStore> logger;
+
 
         public IQueryable<IntIdentityUser> Users
         {
@@ -38,15 +36,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
             }
         }
 
-        public Task AddClaimsAsync(IntIdentityUser user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task AddLoginAsync(IntIdentityUser user, UserLoginInfo login, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+     
 
         public Task AddToRoleAsync(IntIdentityUser user, string roleName, CancellationToken cancellationToken)
         {
@@ -88,11 +78,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
             return Task.FromResult(user);
         }
 
-        public Task<IntIdentityUser> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
+      
         public Task<IntIdentityUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             var user = Users.FirstOrDefault(u => u.NormalizedUserName == normalizedUserName);
@@ -104,11 +90,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
             return Task.FromResult(user.AccessFailedCount);
         }
 
-        public Task<IList<Claim>> GetClaimsAsync(IntIdentityUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public Task<string> GetEmailAsync(IntIdentityUser user, CancellationToken cancellationToken)
         {
             return Task.FromResult(user.Email);
@@ -129,10 +111,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
             return Task.FromResult(user.LockoutEnd);
         }
 
-        public Task<IList<UserLoginInfo>> GetLoginsAsync(IntIdentityUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+    
 
         public Task<string> GetNormalizedEmailAsync(IntIdentityUser user, CancellationToken cancellationToken)
         {
@@ -195,10 +174,7 @@ namespace Ataoge.AspNetCore.Identity.InMemory
             return Task.FromResult(user.UserName);
         }
 
-        public Task<IList<IntIdentityUser>> GetUsersForClaimAsync(Claim claim, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+    
 
         public Task<IList<IntIdentityUser>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
         {
@@ -239,30 +215,21 @@ namespace Ataoge.AspNetCore.Identity.InMemory
             return Task.FromResult(false);
         }
 
-        public Task RemoveClaimsAsync(IntIdentityUser user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+      
 
         public Task RemoveFromRoleAsync(IntIdentityUser user, string roleName, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveLoginAsync(IntIdentityUser user, string loginProvider, string providerKey, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+     
 
         public Task RemoveTokenAsync(IntIdentityUser user, string loginProvider, string name, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task ReplaceClaimAsync(IntIdentityUser user, Claim claim, Claim newClaim, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+    
 
         public Task ResetAccessFailedCountAsync(IntIdentityUser user, CancellationToken cancellationToken)
         {
@@ -348,6 +315,26 @@ namespace Ataoge.AspNetCore.Identity.InMemory
         }
 
         public Task<IdentityResult> UpdateAsync(IntIdentityUser user, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddLoginAsync(IntIdentityUser user, UserLoginInfo login, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveLoginAsync(IntIdentityUser user, string loginProvider, string providerKey, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<UserLoginInfo>> GetLoginsAsync(IntIdentityUser user, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IntIdentityUser> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

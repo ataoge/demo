@@ -11,7 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <summary>
     /// Contains extension methods to <see cref="IServiceCollection"/> for configuring identity services.
     /// </summary>
-    public static class InMemoryIdentityServiceCollectionExtensions
+    internal static class InMemoryIdentityServiceCollectionExtensions
     {
          public static IdentityBuilder AddInMemoryIdentity(this  IServiceCollection services, Action<IdentityOptions> setupAction = null)
          {
