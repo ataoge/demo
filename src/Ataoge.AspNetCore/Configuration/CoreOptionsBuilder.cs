@@ -1,4 +1,6 @@
 using Ataoge.Core;
+using System;
+using System.Reflection;
 
 namespace Ataoge.AspNetCore
 {
@@ -29,6 +31,28 @@ namespace Ataoge.AspNetCore
         public void UserModule(IModule module)
         {
             this.Options.Module = module;
+        }
+
+        public void UserServiceSecurity(Type type = null)
+        {
+            if (type == null) {
+                this.Options.ServiceSecurityType = typeof(NullServiceSecurity);
+                return;
+            }
+
+            if (typeof(IServiceSecurity).IsAssignableFrom(type))
+            {
+                this.Options.ServiceSecurityType = type;
+                return;
+            }
+
+            throw new ArgumentException(nameof(type));
+            
+        }
+
+        public void UsePlugIn(string path)
+        {
+            this.Options.PlugInPath = path;
         }
     }
 }

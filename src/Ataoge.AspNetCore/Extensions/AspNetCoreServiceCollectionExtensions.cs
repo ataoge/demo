@@ -1,6 +1,7 @@
 using System;
 using Ataoge.AspNetCore;
 using Ataoge.Core;
+using Ataoge.PlugIns;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -23,6 +24,18 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 builder.Options.Module.Initilize(services);
             }
+
+            if (!string.IsNullOrEmpty(builder.Options.PlugInPath))
+            {
+                IPlugInManager plugInManager = new PlugInManager(builder.Options.PlugInPath);
+                services.AddSingleton<IPlugInManager>(plugInManager);
+                foreach(IModule module in plugInManager.Modules)
+                {
+                    module.Initilize(services);
+                }
+            }
+
+            services.AddSingleton(typeof(IServiceSecurity), builder.Options.ServiceSecurityType);
             
             services.AddScoped<ISysSession, ClaimsSession>();
 

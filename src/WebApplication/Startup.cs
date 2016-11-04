@@ -9,6 +9,7 @@ using System.Reflection;
 using WebApplication.Services;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Ataoge.AspNetCore;
+using System.IO;
 
 namespace WebApplication
 {
@@ -49,10 +50,13 @@ namespace WebApplication
             services.AddMemoryCache();
             services.AddSingleton<IDistributedCache, MemoryDistributedCache>();
 
+            string plugInPath = Path.Combine(Directory.GetCurrentDirectory(), "PlugIns");
             //添加框架的各种服务
             services.AddAtaogeAspNetCore(o => {
                 o.UseDefaultCache();
                 o.UserModule(new AspNetCoreModule()); //注册模块，内部能自动添加服务
+                o.UsePlugIn(plugInPath);   //加载插件
+                o.UserServiceSecurity();  //注入权限验证
             });
 
             services.AddMvc(option => option.Filters.Add(new AspNetCoreExceptionFilterAttribute()))  //添加例外处理

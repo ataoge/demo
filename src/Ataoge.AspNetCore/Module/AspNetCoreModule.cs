@@ -3,6 +3,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using Ataoge.Services;
+using System;
 
 namespace Ataoge.AspNetCore
 {
@@ -11,17 +12,19 @@ namespace Ataoge.AspNetCore
         public override void Initilize(IServiceCollection services)
         {
             base.Initilize(services);
-            RegisterService(services);
+            RegisterService(services, this.GetType());
         }
 
-        public virtual void RegisterService(IServiceCollection services)
+        public void RegisterService(IServiceCollection services, Type type)
         {
-            var types = typeof(AspNetCoreModule).GetTypeInfo().Assembly.GetTypes().Where(type => typeof(IApplicationService).IsAssignableFrom(type) && !type.GetTypeInfo().IsAbstract);
-            foreach(var type in types)
+            RegisterAssembly(services, type);
+            if (type.GetTypeInfo().BaseType != typeof(object))
             {
-                this.ServiceManager.RegisterServiceType(type);
-                services.AddTransient(type, type);
+                RegisterService(services, type.GetTypeInfo().BaseType);
             }
+            
         }
+
+        
     }
 }

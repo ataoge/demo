@@ -1,3 +1,4 @@
+using System;
 using Ataoge.Core;
 
 namespace Ataoge.AspNetCore
@@ -7,5 +8,9 @@ namespace Ataoge.AspNetCore
         public bool UserDefaultCache { get; set;} = false;
 
         public IModule Module { get; set;}
+
+        public string PlugInPath { get; set; }
+
+        public Type ServiceSecurityType { get; set;} = typeof(NullServiceSecurity);
     }
 }
