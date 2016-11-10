@@ -2,6 +2,7 @@
   "name": "asp.net",
   "private": true,
   "dependencies": {
+    "vue":"2.0.3",
     "bootstrap": "3.3.6",
     "jquery": "2.2.0",
     "jquery-validation": "1.14.0",
