@@ -9,7 +9,7 @@ using System.Security;
 
 namespace WebApplication.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [RouteAttribute("data")]
     public class DataController
     {
