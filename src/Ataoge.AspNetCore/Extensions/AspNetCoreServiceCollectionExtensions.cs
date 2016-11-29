@@ -2,12 +2,13 @@ using System;
 using Ataoge.AspNetCore;
 using Ataoge.Core;
 using Ataoge.PlugIns;
+using Ataoge.Services;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AspNetCoreServiceCollectionExtensions
     {
-        public static IServiceCollection AddAtaogeAspNetCore(this IServiceCollection services, Action<CoreOptionsBuilder> optionsAction = null)
+        public static CoreOptionsBuilder AddAtaogeAspNetCore(this IServiceCollection services, Action<CoreOptionsBuilder> optionsAction = null)
         {
             CoreOptionsBuilder builder = new CoreOptionsBuilder(new CoreOptions());
             if (optionsAction != null)
@@ -28,10 +29,11 @@ namespace Microsoft.Extensions.DependencyInjection
             if (!string.IsNullOrEmpty(builder.Options.PlugInPath))
             {
                 IPlugInManager plugInManager = new PlugInManager(builder.Options.PlugInPath);
+                builder.PlugInManager = plugInManager;
                 services.AddSingleton<IPlugInManager>(plugInManager);
-                foreach(IModule module in plugInManager.Modules)
+                foreach(IPlugIn plugIn in plugInManager.PlugIns)
                 {
-                    module.Initilize(services);
+                    plugIn.Initilize(services);
                 }
             }
 
@@ -39,7 +41,9 @@ namespace Microsoft.Extensions.DependencyInjection
             
             services.AddScoped<ISysSession, ClaimsSession>();
 
-            return services;
+            services.AddTransient<ServiceContext>();
+
+            return builder;
         }
     }
 }

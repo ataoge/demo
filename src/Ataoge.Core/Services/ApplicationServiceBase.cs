@@ -4,10 +4,13 @@ namespace Ataoge.Services
 {
     public abstract class ApplicationServiceBase : IApplicationService
     {
-        protected ApplicationServiceBase(ISysSession session)
+        protected ApplicationServiceBase(ServiceContext serviceContext)
         {
-            this.Session = session;
+            this.ServiceContext = serviceContext;
+            this.Session = serviceContext.Session;
         }
+
+        protected ServiceContext ServiceContext {get;}
 
         public ISysSession Session { get; private set;}
     }

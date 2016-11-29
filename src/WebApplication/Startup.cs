@@ -8,8 +8,12 @@ using Microsoft.Extensions.Logging;
 using System.Reflection;
 using WebApplication.Services;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Ataoge.AspNetCore;
 using System.IO;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace WebApplication
 {
@@ -51,16 +55,43 @@ namespace WebApplication
             services.AddSingleton<IDistributedCache, MemoryDistributedCache>();
 
             string plugInPath = Path.Combine(Directory.GetCurrentDirectory(), "PlugIns");
+            
             //添加框架的各种服务
-            services.AddAtaogeAspNetCore(o => {
+            var build = services.AddAtaogeAspNetCore(o => {
                 o.UseDefaultCache();
                 o.UserModule(new AspNetCoreModule()); //注册模块，内部能自动添加服务
                 o.UsePlugIn(plugInPath);   //加载插件
                 o.UserServiceSecurity();  //注入权限验证
             });
 
-            services.AddMvc(option => option.Filters.Add(new AspNetCoreExceptionFilterAttribute()))  //添加例外处理
+            var mvcBuild = services.AddMvc(option => option.Filters.Add(new AspNetCoreExceptionFilterAttribute()))  //添加例外处理
                     .AddApplicationPart(typeof(AspNetCoreModule).GetTypeInfo().Assembly);  //添加外部Controller
+
+            var assemblies = new List<Assembly>();
+            var plugIns = build?.PlugInManager.PlugIns.Where(p => p.HasViews);
+            IList<IFileProvider> files = new List<IFileProvider>();
+            foreach(var plugIn in plugIns)
+            {
+                var assembly = plugIn.GetType().GetTypeInfo().Assembly;
+                var defaultNamespace = assembly.FullName.Split(',')[0];
+                var embeddedFileProvider = new EmbeddedFileProvider(
+                    assembly,
+                    defaultNamespace
+                );
+                mvcBuild.AddApplicationPart(assembly);
+                assemblies.Add(assembly);
+                files.Add(embeddedFileProvider);
+            }
+
+
+            //添加插件的 Razor view engine
+            services.Configure<RazorViewEngineOptions>(options =>
+            {   
+                foreach(var embeddedFileProvider in files)
+                {             
+                    options.FileProviders.Add(embeddedFileProvider);
+                }
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Ataoge.Core;
 using Ataoge.Utility;
 
 namespace Ataoge.PlugIns
@@ -16,24 +15,25 @@ namespace Ataoge.PlugIns
 
         public List<Assembly> Assemblies { get; private set;}
 
-        private List<IModule> modules = null;
-        public List<IModule> Modules {
+        private List<IPlugIn> _plugIns = null;
+        public List<IPlugIn> PlugIns
+        {
             get 
             {
-                if (modules == null)
+                if (_plugIns == null)
                 { 
-                    modules =  new List<IModule>();
+                    _plugIns =  new List<IPlugIn>();
                     foreach (var asm in this.Assemblies)
                     {
-                        foreach(var type in asm.GetTypes().Where(t => typeof(IModule).GetTypeInfo().IsAssignableFrom(t)))
+                        foreach(var type in asm.GetTypes().Where(t => typeof(IPlugIn).GetTypeInfo().IsAssignableFrom(t)))
                         {
-                            IModule module = Activator.CreateInstance(type) as IModule;
-                            if (module != null)
-                                modules.Add(module);
+                            IPlugIn plugIn = Activator.CreateInstance(type) as IPlugIn;
+                            if (_plugIns != null)
+                                _plugIns.Add(plugIn);
                         }
                     }
                 }
-                return modules;
+                return _plugIns;
             }
         }
     }

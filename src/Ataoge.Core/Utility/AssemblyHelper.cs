@@ -14,9 +14,7 @@ namespace Ataoge.Utility
             var assemblyFiles = Directory
                 .EnumerateFiles(folderPath, "*.*", searchOption)
                 .Where(s => s.EndsWith(".dll") || s.EndsWith(".exe"));
-
-            
-           
+   
             return assemblyFiles.Select(AssemblyLoadContext.Default.LoadFromAssemblyPath).ToList();
         }
     }

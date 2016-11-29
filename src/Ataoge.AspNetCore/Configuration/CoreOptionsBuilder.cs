@@ -1,6 +1,7 @@
 using Ataoge.Core;
 using System;
 using System.Reflection;
+using Ataoge.PlugIns;
 
 namespace Ataoge.AspNetCore
 {
@@ -53,6 +54,12 @@ namespace Ataoge.AspNetCore
         public void UsePlugIn(string path)
         {
             this.Options.PlugInPath = path;
+        }
+
+        public IPlugInManager PlugInManager
+        {
+            get;
+            internal set;
         }
     }
 }
